@@ -4,6 +4,10 @@ var bodyParser = require('body-parser');
 const app = express()
 const port = 3005;
 const db = require("./models");
+// import { createClient } from '@urql/core';
+const fetch = require('isomorphic-unfetch');
+const createClient = require('urql').createClient;
+
 
 /* db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.");    
@@ -42,6 +46,30 @@ app.get('/', (req, res) => {
 
 app.post('/credit/sign', require('./routes/sign.js').signTransaction);
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Example app listening on port ${port}`)
+
+  const APIURL = 'https://api.thegraph.com/subgraphs/name/c4devart/downbelow';
+
+  const Query = `
+  {
+    depositItems(first: 5) {
+      id
+      from
+      amount
+      timestamp
+    }
+    withdrawItems(first: 5) {
+      id
+      to
+      amount
+      timestamp
+    }
+  }  
+  `
+  const client = createClient({url: APIURL});
+
+  const ret = await client.query(Query).toPromise();
+
+  console.log("resulet ==>", ret.data);
 })

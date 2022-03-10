@@ -46,7 +46,7 @@ exports.signTransaction = async(req, res) => {
 
         let {credit, nonce} = userInfo;
 
-        let deadline = 1686913074; //Math.floor(Date.now() / 1000) + 13; 
+        let deadline = Math.floor(Date.now() / 1000) + 20; 
 
         const value = {
             account: req.body.wallet,
