@@ -1,0 +1,6 @@
+{
+    "provider_url": "wss://speedy-nodes-nyc.moralis.io/17ea2eb9040c9cbc2929baf1/eth/rinkeby/ws",
+    "network": "rinkeby",
+    "contract": "0x7093ed76D3D629B2367c4eCab7e335753896b91A",
+    "topic": "0xd36a2f67d06d285786f61a32b052b9ace6b0b7abef5177b54358abdc83a0b69b"
+}

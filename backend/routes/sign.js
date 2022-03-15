@@ -38,15 +38,15 @@ exports.signTransaction = async(req, res) => {
             return;
         }
 
+        let {credit, nonce} = userInfo;
+        
         let amount = parseInt(req.body.amount);
         if(req.body.type == 'withdraw' && amount > credit) {
             res.status(403).send({ message: 'Withdrawal amount exceeds than credit balance' });
             return;
         }
 
-        let {credit, nonce} = userInfo;
-
-        let deadline = Math.floor(Date.now() / 1000) + 20; 
+        let deadline = Math.floor(Date.now() / 1000) + 30; 
 
         const value = {
             account: req.body.wallet,

@@ -10,20 +10,27 @@ module.exports = (sequelize, Sequelize) => {
             },
             walletAddress: {
                 allowNull: false,
-                type: Sequelize.STRING,
-                unique: true
+                type: Sequelize.STRING
             },
             creditAmount: {
                 type: Sequelize.INTEGER(),
                 defaultValue: 0
             },
             abyssAmount: {
-                type: Sequelize.DECIMAL(30, 18),
-                defaultValue: 0   
+                allowNull: false,
+                type: Sequelize.STRING
             },
             prevCredit: {
                 type: Sequelize.INTEGER(),
                 defaultValue: 0
+            },
+            type: {
+                allowNull: false,
+                type: Sequelize.STRING
+            },
+            eventId: {
+                type: Sequelize.INTEGER(),
+                defaultValue: 0    
             }
         }
     );

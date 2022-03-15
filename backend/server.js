@@ -5,16 +5,12 @@ const app = express()
 const port = 3005;
 const db = require("./models");
 
-
-const { ApolloClient, HttpLink, InMemoryCache, gql } = require('@apollo/client')
-const fetch = require('cross-fetch');
-
-
+require('./subscript.js');
 
 /* db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");    
+  console.log("Drop and re-sync db.");    
 }); */
-
+ 
 db.sequelize.sync();
 
 app.use( bodyParser.json() );
@@ -49,68 +45,6 @@ app.get('/', (req, res) => {
 app.post('/credit/sign', require('./routes/sign.js').signTransaction);
 
 app.listen(port, async () => {
-  console.log(`Example app listening on port ${port}`)
-
-  /* 
-  const APIURL = 'https://api.thegraph.com/subgraphs/name/c4devart/downbelow';
-
-  const Query = `
-  {
-    depositItems(first: 5) {
-      id
-      from
-      amount
-      timestamp
-    }
-    withdrawItems(first: 5) {
-      id
-      to
-      amount
-      timestamp
-    }
-  }  
-  `
-  const client = createClient({url: APIURL});
-
-  const ret = await client.query(Query).toPromise();
-
-  console.log("resulet ==>", ret.data); */
+  console.log(`Example app listening on port ${port}`);
+  require('./subscript.js');
 })
-
-async function main() {
-    const Query = `
-      {
-        depositItems(first: 10) {
-          id
-          from
-          amount
-          timestamp
-        }
-        withdrawItems(first: 10) {
-          id
-          to
-          amount
-          timestamp
-        }
-      }  
-    `
-    const APIURL = 'https://api.thegraph.com/subgraphs/name/c4devart/downbelow';
-
-    const client = new ApolloClient({
-      link: new HttpLink({ uri: APIURL, fetch }),
-      cache: new InMemoryCache(),
-    })
-
-    client
-    .query({
-      query: gql(Query),
-    })
-    .then(async (res) => {
-      console.log("new--->", res.data);
-    })
-    .catch((err) => {
-      console.log('Error fetching data: ', err)
-    })
-}
-
-main();
